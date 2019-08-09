@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Base.Model;
+using BaseAPI.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -14,6 +15,7 @@ namespace Base.Core.Web.Controllers
     public class BaseController<TModel, TContext> : ControllerBase
     {
         private readonly ILogger<BaseController<TModel, TContext>> _log;
+        private readonly IDatabaseService _db;
 
         // get all data
         [HttpGet]
@@ -83,6 +85,38 @@ namespace Base.Core.Web.Controllers
                 {
                     PagingResponse page = new PagingResponse(data, total);
                     res.OnSuccess(page);
+                }
+            }
+            catch (Exception ex)
+            {
+                res.OnException(ex);
+                _log.LogError(ex, ex.Message);
+            }
+
+            return res;
+        }
+
+        [HttpGet("{id}")]
+        public virtual async Task<ServiceResponse> GetById(string id)
+        {
+            ServiceResponse res = new ServiceResponse();
+
+            try
+            {
+                if (string.IsNullOrEmpty(id))
+                {
+                    return res.OnError(Core.ServiceResponseCode.InvalidData);
+                }
+
+                var data = 1; // await _db.GetById<TModel>()
+
+                if (data == null)
+                {
+                    res.OnError(Core.ServiceResponseCode.NotFound);
+                }
+                else
+                {
+                    res.OnSuccess(data);
                 }
             }
             catch (Exception ex)
