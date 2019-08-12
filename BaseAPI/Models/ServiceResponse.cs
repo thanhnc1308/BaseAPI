@@ -1,10 +1,10 @@
-﻿using Base.Core.Web.Core;
+﻿using Base.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Base.Model
+namespace Base.Models
 {
     public class ServiceResponse
     {

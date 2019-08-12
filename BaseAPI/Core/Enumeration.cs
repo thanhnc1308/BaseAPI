@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Base.Core.Web.Core
+namespace Base.Core
 {
     public enum ServiceResponseCode : int
     {

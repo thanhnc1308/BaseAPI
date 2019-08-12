@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Base.Model;
-using BaseAPI.Services;
+using Base.Core;
+using Base.Models;
+using Base.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Base.Core.Web.Controllers
+namespace Base.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -16,6 +17,7 @@ namespace Base.Core.Web.Controllers
     {
         private readonly ILogger<BaseController<TModel, TContext>> _log;
         private readonly IDatabaseService _db;
+        private readonly IAuthService _auth;
 
         // get all data
         [HttpGet]
@@ -42,10 +44,10 @@ namespace Base.Core.Web.Controllers
                     res.OnSuccess(data);
                 }
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                res.OnException(ex);
-                _log.LogError(ex, ex.Message);
+                res.OnException(e);
+                _log.LogError(e, e.Message);
             }
 
             return res;
@@ -87,10 +89,10 @@ namespace Base.Core.Web.Controllers
                     res.OnSuccess(page);
                 }
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                res.OnException(ex);
-                _log.LogError(ex, ex.Message);
+                res.OnException(e);
+                _log.LogError(e, e.Message);
             }
 
             return res;
@@ -119,13 +121,50 @@ namespace Base.Core.Web.Controllers
                     res.OnSuccess(data);
                 }
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                res.OnException(ex);
-                _log.LogError(ex, ex.Message);
+                res.OnException(e);
+                _log.LogError(e, e.Message);
             }
 
             return res;
+        }
+
+        [HttpDelete]
+        public virtual async Delete(TModel model)
+        {
+            ServiceResponse res = new ServiceResponse();
+
+            try
+            {
+                bool success = true;
+
+                //model.userId = _auth.GetUserId();
+                using ()
+                {
+                    // FindAsync deleteModel = ?
+                    // if deletedModel = null --> res.NotFound
+                    // if deletedModel.EditVersion != model.EditVersion --> ObsoleteVersion
+                    // ValidateOnDelete
+                    // await Delete()
+                    // OnAfterDeleted // event after delete
+                }
+
+                if (!success)
+                {
+                    res.OnError(ServiceResponseCode.Error);
+                }
+            }
+            catch (Microsoft.EntityFrameworkCore.DbUpdateConcurrencyException duplicatePK)
+            {
+                _log.LogError(duplicatePK + "");
+                res.OnException(duplicatePK);
+            }
+            catch (Exception e)
+            {
+                res.OnException(e);
+                _log.LogError(e, e.Message);
+            }
         }
     }
 }

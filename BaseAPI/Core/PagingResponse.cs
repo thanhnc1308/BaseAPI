@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Base.Model
+namespace Base.Core
 {
     public class PagingResponse
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BaseAPI.Core
+namespace Base.Core
 {
     public class Keys
     {

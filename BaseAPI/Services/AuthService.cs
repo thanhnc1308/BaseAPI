@@ -1,5 +1,5 @@
-﻿using BaseAPI.Core;
-using BaseAPI.Models;
+﻿using Base.Core;
+using Base.Models;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BaseAPI.Core
+namespace Base.Core
 {
     public class AuthService : IAuthService
     {

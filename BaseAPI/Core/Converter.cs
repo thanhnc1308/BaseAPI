@@ -7,21 +7,27 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BaseAPI.Core
+namespace Base.Core
 {
     public class Converter
     {
-        private static readonly DateFormatHandling dateFormatHandling;
-        private static readonly DateTimeZoneHandling dateTimeZoneHandling;
-        private static readonly NullValueHandling nullValueHandling;
-        private static readonly ReferenceLoopHandling referenceLoopHandling;
+        private static readonly DateFormatHandling dateFormatHandling = DateFormatHandling.IsoDateFormat;
+        private static readonly DateTimeZoneHandling dateTimeZoneHandling = DateTimeZoneHandling.Local;
+        private static readonly string dateFormatString = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFFK";
+        private static readonly NullValueHandling nullValueHandling = NullValueHandling.Include;
+        private static readonly ReferenceLoopHandling referenceLoopHandling = ReferenceLoopHandling.Ignore;
 
         #region json
         public static JsonSerializerSettings GetJsonSerializerSettings()
         {
-            JsonSerializerSettings settings = new JsonSerializerSettings();
-
-            return settings;
+            return new JsonSerializerSettings()
+            {
+                DateFormatHandling = dateFormatHandling,
+                DateTimeZoneHandling = dateTimeZoneHandling,
+                DateFormatString = dateFormatString,
+                NullValueHandling = nullValueHandling,
+                ReferenceLoopHandling = referenceLoopHandling
+            };
         }
 
         public static string Serialize(object obj)
@@ -52,7 +58,7 @@ namespace BaseAPI.Core
 
         public static string Base64Decode(string base64Text)
         {
-            if (string.IsNullOrWhiteSpace(text))
+            if (string.IsNullOrWhiteSpace(base64Text))
             {
                 return string.Empty;
             }
