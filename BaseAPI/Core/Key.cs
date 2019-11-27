@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Base.Core
 {
-    public class Keys
+    public class Key
     {
         #region Header
         public const string HeaderUserId = "X-UserId";

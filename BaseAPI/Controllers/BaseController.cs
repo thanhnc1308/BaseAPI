@@ -131,7 +131,7 @@ namespace Base.Controllers
         }
 
         [HttpDelete]
-        public virtual async Delete(TModel model)
+        public virtual async Task<ServiceResponse> Delete(TModel model)
         {
             ServiceResponse res = new ServiceResponse();
 
@@ -140,15 +140,15 @@ namespace Base.Controllers
                 bool success = true;
 
                 //model.userId = _auth.GetUserId();
-                using ()
-                {
-                    // FindAsync deleteModel = ?
-                    // if deletedModel = null --> res.NotFound
-                    // if deletedModel.EditVersion != model.EditVersion --> ObsoleteVersion
-                    // ValidateOnDelete
-                    // await Delete()
-                    // OnAfterDeleted // event after delete
-                }
+                //using ()
+                //{
+                //    // FindAsync deleteModel = ?
+                //    // if deletedModel = null --> res.NotFound
+                //    // if deletedModel.EditVersion != model.EditVersion --> ObsoleteVersion
+                //    // ValidateOnDelete
+                //    // await Delete()
+                //    // OnAfterDeleted // event after delete
+                //}
 
                 if (!success)
                 {
@@ -165,6 +165,8 @@ namespace Base.Controllers
                 res.OnException(e);
                 _log.LogError(e, e.Message);
             }
+
+            return res;
         }
     }
 }

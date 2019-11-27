@@ -7,6 +7,6 @@ namespace Base.Services
 {
     public class IDatabaseService
     {
-
+        //public partial string GenerateSelectById<T>(string id);
     }
 }

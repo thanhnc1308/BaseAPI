@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Base.Core
+﻿namespace Base.Core
 {
-    public class Constants
+    public class Constant
     {
-        #region db
+        #region database
         public const int MaxReturnRecord = 100;
         public const string DefaultSchemaName = "default";
+        public const string ModelNameSpace = "Base.Model";
         #endregion
 
         #region regex
