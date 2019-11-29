@@ -8,6 +8,7 @@
         Duplicate = 3,
         RequireConfirm = 4,
         ObsoleteVersion = 5,
+        Forbidden = 6,
         Error = 99,
         Exception = 999
     }

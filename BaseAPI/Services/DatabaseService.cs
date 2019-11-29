@@ -17,7 +17,7 @@ namespace Base.Services
         public string GenerateSelectById<T>(string id) where T : BaseModel
         {
             string sql = "";
-            id = SecureSQLUtil.BuildSafeSQL(id);
+            id = SecureSQLUtil.BuildSafeSqlLiteral(id);
             var model = Activator.CreateInstance<T>();
             string tableName = model.GetTableName();
             sql = $"SELECT {Constant.DefaultSchemaName}.{tableName}.*, {GetEditVersionColumn(tableName)} FROM {Constant.DefaultSchemaName}.{tableName} WHERE {model.GetPrimaryKeyFieldName()} = {GetWhereValue(id)}";
@@ -27,12 +27,14 @@ namespace Base.Services
         public string GenerateSelectById(string id, string tableName)
         {
             string sql = "";
-            id = SecureSQLUtil.BuildSafeSQL(id);
+            id = SecureSQLUtil.BuildSafeSqlLiteral(id);
             Type modelType = GetModelType(tableName);
             var model = (BaseModel)Activator.CreateInstance(modelType);
             sql = $"SELECT {Constant.DefaultSchemaName}.{tableName}.*, {GetEditVersionColumn(tableName)} FROM {Constant.DefaultSchemaName}.{tableName} WHERE {model.GetPrimaryKeyFieldName()} = {GetWhereValue(id)}";
             return sql;
         }
+
+
         #endregion
 
         #region Private Methods

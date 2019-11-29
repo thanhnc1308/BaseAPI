@@ -35,6 +35,16 @@ namespace Base.Models
             return this;
         }
 
+        public ServiceResponse OnForbidden(object data = null)
+        {
+            this.Success = false;
+            this.Code = ServiceResponseCode.Forbidden;
+            this.SystemMessage = "Forbidden";
+            this.UserMessage = "Forbidden";
+            this.Data = data;
+            return this;
+        }
+
         public ServiceResponse OnException(Exception ex)
         {
             if (ex != null)
@@ -51,7 +61,7 @@ namespace Base.Models
             return this;
         }
 
-        public ServiceResponse OnError(ServiceResponseCode code, int subCode = 0, object data = null, string userMessage = "", string systemMessage = "")
+        public ServiceResponse OnError(ServiceResponseCode code, int subCode = 0, object data = null, string userMessage = "An error occurs when processing request", string systemMessage = "An error occurs when processing request")
         {
             this.Success = false;
             this.Code = code;
